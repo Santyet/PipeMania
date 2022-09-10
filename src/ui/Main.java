@@ -12,7 +12,7 @@ TO DO LIST
 * calculaar el score
 * hacer arbol binario con scores
 * hacer uml
-* 
+*
  */
 
 import java.util.Scanner;
