@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +10,8 @@ public class MainGame {
     private Node tail;
     private String[][] board;
     private ScoreBoard scoreBoard;
+    private String playerName;
+    private Long start;
 
     public MainGame() {
         scoreBoard = new ScoreBoard();
@@ -20,7 +22,7 @@ public class MainGame {
     }
 
 
-    public void genGame() {
+    public void genGame(String name) {
         Random value = new Random();
         int r1 = value.nextInt(7 + 1) + 1;
         int c1 = value.nextInt(7 + 1) + 1;
@@ -34,6 +36,9 @@ public class MainGame {
         } while (r2 == r1 && c2 == c1);
         tail.setRow(7);
         tail.setColumn(8);
+        playerName=name;
+        start = timer();
+        showBoard();
     }
 
     public void showBoard() {
@@ -94,37 +99,30 @@ public class MainGame {
         System.out.println(noColu + " " + cuColu + " " + cuRow + " " + noRow);
         //En caso que se salga del rango de movimiento
         if (noRow > cuRow + 1 || noRow < cuRow - 1 || noColu > cuColu + 1 || noColu < cuColu - 1) {
-            System.out.println("1");
             return false;
         }
         //En caso que se pongan tipos de tuberias incompatibles
         if (noType.equals("=") && cuType.equals("||") || noType.equals("||") && cuType.equals("=") || noType.equals("o") && cuType.equals("o")) {
-            System.out.println("2");
             return false;
         }
         //En caso que se quiera reemplazar tuberias en esta opcion (Vaya a la otra xd)
-        if (noRow == cuRow && cuColu == noColu) {
-            System.out.println("3");
+        if (noRow == cuRow && cuColu == noColu){
             return false;
         }
         //En caso que vaya a haber cambior de fila (verticalmente) y se intente conectar tuberias que verticalmente no van
         if ((noRow - cuRow != 0) && (cuType.equals("=") && noType.equals("o") || cuType.equals("o") && noType.equals("=") || cuType.equals("=") && noType.equals("="))) {
-            System.out.println("4");
             return false;
         }
         //En caso que vaya a haber cambior de columna (horizontalmente) y se intente conectar tuberias que horizontalmente no van
         if ((noColu - cuColu != 0) && (cuType.equals("||") && noType.equals("o") || cuType.equals("o") && noType.equals("||") || cuType.equals("||") && noType.equals("||"))) {
-            System.out.println("5");
             return false;
         }
         //Si se va a iniciar con tuberias en cierta posicion que lo hace inaccesible
         if (cuType.equals("V") && (noType.equals("=") && noRow - cuRow != 0 || noType.equals("||") && noColu - cuColu != 0 || noType.equals("o"))) {
-            System.out.println("6");
             return false;
         }
         //En caso que puso la tuberia de cambiar direccion pero no cambio la direccion xd
         if (cuType.equals("o") && noType.equals("||") && current.getPrev().getType().equals("||") || cuType.equals("o") && noType.equals("=") && current.getPrev().getType().equals("=")) {
-            System.out.println("7");
             return false;
         }
         return out;
@@ -179,5 +177,6 @@ public class MainGame {
 
         return Integer.parseInt(process);
     }
+
 
 }

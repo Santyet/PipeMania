@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class ScoreBoard {
 
@@ -12,7 +12,7 @@ public class ScoreBoard {
     public void insert(Player player, Player current) {
 
         if (player.getScore() == current.getScore()) {
-            //si es igual, en este caso lo guardamos en el array de nombres del nodo con el mismo score
+            //si es igual, en este caso lo guardamos en el arraylist de nombres del nodo con el mismo score
             current.addArray(player.getName());
 
         }
